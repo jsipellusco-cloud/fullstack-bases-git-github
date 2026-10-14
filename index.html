@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de motocicletas: encuentra tu próxima moto.">
+  <title>MotoVía | Venta de motocicletas</title>
+  <style>
+    :root {
+      --dark: #111827;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --accent: #f97316;
+      --accent-dark: #ea580c;
+      --light: #f3f4f6;
+      --white: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: #fff; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, 92%); margin: 0 auto; }
+    header { background: var(--dark); color: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 12px #0002; }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: .5px; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 24px; align-items: center; }
+    nav a { font-size: .95rem; color: #e5e7eb; }
+    nav a:hover { color: #fb923c; }
+    .btn { display: inline-block; background: var(--accent); color: white; padding: 12px 20px; border: 0; border-radius: 8px; font-weight: 700; cursor: pointer; transition: .2s; }
+    .btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .hero { background: linear-gradient(110deg, #111827 0%, #1f2937 58%, #374151 100%); color: white; padding: 76px 0; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 36px; }
+    .eyebrow { color: #fdba74; text-transform: uppercase; font-size: .8rem; font-weight: 800; letter-spacing: 2px; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 1.06; margin: 14px 0 18px; }
+    .hero p { max-width: 540px; color: #d1d5db; margin-bottom: 26px; }
+    .hero-art { min-height: 300px; display: grid; place-items: center; position: relative; }
+    .hero-art::before { content: ""; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: #f9731626; border: 1px solid #fb923c55; }
+    .hero-art img { position: relative; width: 100%; max-width: 490px; border-radius: 18px; object-fit: cover; aspect-ratio: 4/3; box-shadow: 0 18px 40px #0005; }
+    section { padding: 68px 0; }
+    .section-head { text-align: center; margin-bottom: 32px; }
+    .section-head h2 { color: var(--dark); font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 8px; }
+    .section-head p { color: var(--muted); }
+    .filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+    .filter-btn { border: 1px solid #d1d5db; border-radius: 999px; background: white; padding: 9px 17px; cursor: pointer; color: var(--ink); }
+    .filter-btn.active, .filter-btn:hover { background: var(--dark); color: white; border-color: var(--dark); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 14px; overflow: hidden; background: white; box-shadow: 0 6px 18px #1118270a; transition: .2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px #11182716; }
+    .card img { width: 100%; height: 210px; object-fit: cover; background: #e5e7eb; display: block; }
+    .card-body { padding: 19px; }
+    .tag { display: inline-block; font-size: .75rem; font-weight: 800; color: #c2410c; background: #ffedd5; border-radius: 5px; padding: 4px 8px; margin-bottom: 8px; }
+    .card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+    .specs { display: flex; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: .88rem; margin: 10px 0 14px; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .price { font-size: 1.25rem; font-weight: 900; color: var(--dark); }
+    .small-btn { padding: 9px 13px; font-size: .88rem; }
+    .benefits { background: var(--light); }
+    .benefit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .benefit { background: white; border-radius: 12px; padding: 25px; text-align: center; }
+    .benefit .icon { font-size: 2rem; margin-bottom: 10px; }
+    .benefit h3 { margin-bottom: 7px; }
+    .benefit p { color: var(--muted); font-size: .94rem; }
+    .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 35px; align-items: start; }
+    .contact-info { background: var(--dark); color: white; padding: 30px; border-radius: 14px; }
+    .contact-info h2 { font-size: 1.8rem; margin-bottom: 12px; }
+    .contact-info p { color: #d1d5db; margin-bottom: 18px; }
+    .contact-info li { list-style: none; margin: 12px 0; }
+    form { display: grid; gap: 14px; }
+    label { font-weight: 700; font-size: .92rem; }
+    input, select, textarea { width: 100%; margin-top: 5px; padding: 12px 13px; border: 1px solid #d1d5db; border-radius: 8px; font: inherit; }
+    textarea { min-height: 110px; resize: vertical; }
+    .notice { font-size: .85rem; color: var(--muted); }
+    footer { background: #0b1120; color: #d1d5db; text-align: center; padding: 24px 0; font-size: .9rem; }
+    @media (max-width: 820px) {
+      .hero-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero { padding: 54px 0; }
+      .hero-art { min-height: 220px; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .benefit-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .nav { padding: 14px 0; align-items: flex-start; flex-direction: column; }
+      nav { gap: 14px; flex-wrap: wrap; }
+      .grid { grid-template-columns: 1fr; }
+      section { padding: 50px 0; }
+      .hero-art::before { width: 220px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#inicio">Moto<span>Vía</span></a>
+      <nav aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#catalogo">Motocicletas</a>
+        <a href="#nosotros">Ventajas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Tu próxima aventura empieza aquí</div>
+          <h1>Encuentra la moto ideal para ti.</h1>
+          <p>Descubre motocicletas para la ciudad, el trabajo y la aventura. Compara modelos y encuentra una opción que se adapte a tu estilo.</p>
+          <a class="btn" href="#catalogo">Ver catálogo ↓</a>
+        </div>
+        <div class="hero-art">
+          <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=85" alt="Motocicleta en un entorno de aventura">
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo">
+      <div class="container">
+        <div class="section-head">
+          <h2>Nuestras motocicletas</h2>
+          <p>Explora algunos modelos destacados de nuestro catálogo.</p>
+        </div>
+        <div class="filters" aria-label="Filtrar motocicletas">
+          <button class="filter-btn active" data-filter="todas">Todas</button>
+          <button class="filter-btn" data-filter="urbana">Urbanas</button>
+          <button class="filter-btn" data-filter="deportiva">Deportivas</button>
+          <button class="filter-btn" data-filter="aventura">Aventura</button>
+        </div>
+
+        <div class="grid" id="motoGrid">
+          <article class="card" data-category="urbana">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80" alt="Motocicleta urbana negra" loading="lazy">
+            <div class="card-body">
+              <span class="tag">URBANA</span>
+              <h3>Street 150</h3>
+              <p>Ligera y práctica para tus recorridos diarios.</p>
+              <div class="specs"><span>🏍️ 150 cc</span><span>⚙️ Manual</span><span>⛽ Gasolina</span></div>
+              <div class="price-row"><span class="price">Bs 9.800</span><button class="btn small-btn" onclick="consultar('Street 150')">Consultar</button></div>
+            </div>
+          </article>
+
+          <article class="card" data-category="deportiva">
+            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80" alt="Motocicleta de estilo deportivo" loading="lazy">
+            <div class="card-body">
+              <span class="tag">DEPORTIVA</span>
+              <h3>Racer 250</h3>
+              <p>Diseño deportivo para quienes buscan emoción.</p>
+              <div class="specs"><span>🏍️ 250 cc</span><span>⚙️ Manual</span><span>💨 Deportiva</span></div>
+              <div class="price-row"><span class="price">Bs 18.500</span><button class="btn small-btn" onclick="consultar('Racer 250')">Consultar</button></div>
+            </div>
+          </article>
+
+          <article class="card" data-category="aventura">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80" alt="Motocicleta preparada para aventura" loading="lazy">
+            <div class="card-body">
+              <span class="tag">AVENTURA</span>
+              <h3>Trail 200</h3>
+              <p>Versátil para la ciudad y caminos de tierra.</p>
+              <div class="specs"><span>🏍️ 200 cc</span><span>⚙️ Manual</span><span>🛣️ Mixta</span></div>
+              <div class="price-row"><span class="price">Bs 14.200</span><button class="btn small-btn" onclick="consultar('Trail 200')">Consultar</button></div>
+            </div>
+          </article>
+
+          <article class="card" data-category="urbana">
+            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80" alt="Motocicleta compacta" loading="lazy">
+            <div class="card-body">
+              <span class="tag">URBANA</span>
+              <h3>City 125</h3>
+              <p>Una compañera económica para el día a día.</p>
+              <div class="specs"><span>🏍️ 125 cc</span><span>⚙️ Manual</span><span>⛽ Gasolina</span></div>
+              <div class="price-row"><span class="price">Bs 7.600</span><button class="btn small-btn" onclick="consultar('City 125')">Consultar</button></div>
+            </div>
+          </article>
+
+          <article class="card" data-category="deportiva">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80" alt="Motocicleta deportiva en carretera" loading="lazy">
+            <div class="card-body">
+              <span class="tag">DEPORTIVA</span>
+              <h3>Sport 300</h3>
+              <p>Estilo moderno para salir a recorrer la carretera.</p>
+              <div class="specs"><span>🏍️ 300 cc</span><span>⚙️ Manual</span><span>🏁 Sport</span></div>
+              <div class="price-row"><span class="price">Bs 24.900</span><button class="btn small-btn" onclick="consultar('Sport 300')">Consultar</button></div>
+            </div>
+          </article>
+
+          <article class="card" data-category="aventura">
+            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80" alt="Motocicleta para rutas largas" loading="lazy">
+            <div class="card-body">
+              <span class="tag">AVENTURA</span>
+              <h3>Adventure 400</h3>
+              <p>Comodidad y presencia para viajes más largos.</p>
+              <div class="specs"><span>🏍️ 400 cc</span><span>⚙️ Manual</span><span>🧭 Touring</span></div>
+              <div class="price-row"><span class="price">Bs 32.500</span><button class="btn small-btn" onclick="consultar('Adventure 400')">Consultar</button></div>
+            </div>
+          </article>
+        </div>
+        <p class="notice" style="text-align:center; margin-top:18px;">Precios, modelos y especificaciones de ejemplo para esta página demostrativa. Confirma los datos antes de publicar.</p>
+      </div>
+    </section>
+
+    <section class="benefits" id="nosotros">
+      <div class="container">
+        <div class="section-head">
+          <h2>¿Por qué elegir MotoVía?</h2>
+          <p>Te acompañamos para que elijas con confianza.</p>
+        </div>
+        <div class="benefit-grid">
+          <div class="benefit"><div class="icon">🛡️</div><h3>Compra con confianza</h3><p>Revisa las características y consulta antes de tomar una decisión.</p></div>
+          <div class="benefit"><div class="icon">🤝</div><h3>Atención personalizada</h3><p>Te ayudamos a comparar alternativas según tus necesidades.</p></div>
+          <div class="benefit"><div class="icon">🔧</div><h3>Asesoramiento</h3><p>Resuelve tus dudas sobre cilindrada, uso y mantenimiento.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <h2>Hablemos de tu próxima moto</h2>
+          <p>Completa el formulario y cuéntanos qué modelo te interesa.</p>
+          <ul>
+            <li>📍 Ubicación: La Paz, Bolivia</li>
+            <li>🕒 Horario: Lunes a sábado, 09:00–18:00</li>
+            <li>✉️ Correo: ventas@motovia.example</li>
+          </ul>
+        </div>
+        <form id="contactForm">
+          <div><label for="nombre">Nombre completo</label><input id="nombre" name="nombre" type="text" placeholder="Escribe tu nombre" required></div>
+          <div><label for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" placeholder="tu@correo.com" required></div>
+          <div><label for="modelo">Modelo de interés</label>
+            <select id="modelo" name="modelo" required>
+              <option value="">Selecciona una moto</option>
+              <option>Street 150</option><option>Racer 250</option><option>Trail 200</option><option>City 125</option><option>Sport 300</option><option>Adventure 400</option>
+            </select>
+          </div>
+          <div><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" placeholder="¿Qué te gustaría saber?"></textarea></div>
+          <button class="btn" type="submit">Enviar consulta</button>
+          <p class="notice">Demostración: el formulario no envía datos a un servidor; muestra una confirmación en pantalla.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> MotoVía · Página demostrativa de venta de motocicletas.</div>
+  </footer>
+
+  <script>
+    // Filtrar las motocicletas por categoría.
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const motoCards = document.querySelectorAll('.card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        const category = button.dataset.filter;
+
+        motoCards.forEach(card => {
+          card.style.display = category === 'todas' || card.dataset.category === category ? '' : 'none';
+        });
+      });
+    });
+
+    // Al pulsar Consultar, selecciona el modelo en el formulario.
+    function consultar(modelo) {
+      document.getElementById('modelo').value = modelo;
+      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('nombre').focus({ preventScroll: true });
+    }
+
+    // Confirmación local del formulario (no transmite información).
+    document.getElementById('contactForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const modelo = document.getElementById('modelo').value;
+      alert(`¡Gracias, ${nombre}! Tu consulta sobre la ${modelo} está preparada. Esta demostración no envía datos por internet.`);
+      event.target.reset();
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
